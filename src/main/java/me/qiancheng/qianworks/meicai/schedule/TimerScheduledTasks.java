@@ -1,4 +1,4 @@
-package me.qiancheng.qianworks.meicai.work;
+package me.qiancheng.qianworks.meicai.schedule;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 //@Component
 public class TimerScheduledTasks {

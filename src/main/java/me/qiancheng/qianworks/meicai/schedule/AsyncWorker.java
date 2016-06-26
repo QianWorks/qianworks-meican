@@ -1,4 +1,4 @@
-package me.qiancheng.qianworks.meicai.work;
+package me.qiancheng.qianworks.meicai.schedule;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;

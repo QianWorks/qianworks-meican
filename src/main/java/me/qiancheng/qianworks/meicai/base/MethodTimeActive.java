@@ -1,6 +1,6 @@
 package me.qiancheng.qianworks.meicai.base;
 
-import me.qiancheng.qianworks.meicai.work.AsyncMailWorker;
+import me.qiancheng.qianworks.meicai.schedule.AsyncMailWorker;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;

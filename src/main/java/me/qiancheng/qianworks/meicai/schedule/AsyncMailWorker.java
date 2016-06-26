@@ -1,4 +1,4 @@
-package me.qiancheng.qianworks.meicai.work;
+package me.qiancheng.qianworks.meicai.schedule;
 
 import me.qiancheng.qianworks.meicai.service.MailService;
 import org.slf4j.Logger;

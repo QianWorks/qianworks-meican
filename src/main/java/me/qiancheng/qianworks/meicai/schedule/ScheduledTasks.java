@@ -1,4 +1,4 @@
-package me.qiancheng.qianworks.meicai.work;
+package me.qiancheng.qianworks.meicai.schedule;
 
 import java.io.IOException;
 import java.util.Map;
@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import me.qiancheng.qianworks.meicai.constant.MeicanAPIConstant;
 import me.qiancheng.qianworks.meicai.model.Args;
-import me.qiancheng.qianworks.meicai.model.Return;
 import me.qiancheng.qianworks.meicai.model.Status;
 import me.qiancheng.qianworks.meicai.model.Token;
 import me.qiancheng.qianworks.meicai.service.MailService;
