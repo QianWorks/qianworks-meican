@@ -343,7 +343,7 @@ public class Mailer {
 	 * @see #setEmbeddedImages(Email, MimeMultipart)
 	 * @see #setAttachments(Email, MimeMultipart)
 	 */
-	public final void sendMail(final Email email)
+	public void sendMail(final Email email)
 			throws MailException {
 		if (validate(email)) {
 			final boolean async = false;

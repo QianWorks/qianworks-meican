@@ -25,7 +25,7 @@ public class AsyncMailWorker {
     @Async
     public synchronized void faiure(String name) {
         String threadName = Thread.currentThread().getName();
-            mailService.send("i@qiancheng.me",name,"faiure");
+            mailService.send("i@qiancheng.me","faiure",name);
         LOG.info("   " + threadName + " faiure " + name);
     }
 }

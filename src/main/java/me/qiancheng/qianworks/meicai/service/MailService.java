@@ -29,15 +29,19 @@ public class MailService {
     @Autowired
     private Mailer mailSender;
 
-    private void setup(Email email){
+    @Deprecated
+    protected void setup(Email email){
         if(null!=email){
-            email.setFromAddress(nickname, from);
+            synchronized (email){
+                if(null!=email){
+                    email.setFromAddress(nickname, from);
+                }
+            }
         }
     }
 
     public synchronized void send(String to,String subject,String content){
         Email email = new Email();
-        setup(email);
         email.addRecipient(getNickname(to), to, Message.RecipientType.TO);
         email.setSubject(subject);
         email.setTextHTML(content);
@@ -46,7 +50,6 @@ public class MailService {
 
     public synchronized void send(List<String> toList, String subject, String content){
         Email email = new Email();
-        setup(new Email());
         for (String to : toList) {
             email.addRecipient(getNickname(to), to, Message.RecipientType.TO);
         }
@@ -55,12 +58,11 @@ public class MailService {
         sendMail(email);
     }
 
-    public void sendMail(Email email){
-//        mailSender.sendMail(email);
-        System.out.println(email);
+    protected void sendMail(Email email){
+        mailSender.sendMail(email);
     }
 
-    private String getNickname(String email){
+    protected String getNickname(String email){
         return null;
     }
 }

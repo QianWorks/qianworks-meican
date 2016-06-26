@@ -1,8 +1,10 @@
 package me.qiancheng.qianworks.meicai.advice;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.simplejavamail.email.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,36 +30,29 @@ public class EnvelopeAdvice {
 
     private static final Logger LOG = LoggerFactory.getLogger(EnvelopeAdvice.class);
 
-    @Pointcut("execution(* me.qiancheng.qianworks.meicai.service.MailService.*(..))  && args(email,..)")
-    public void sendMailPointcut(Email email){ }
+    @Pointcut("execution(* org.simplejavamail.mailer.Mailer.sendMail(..))  && args(email,..)")
+    public void sendMailPointcut(Email email) {
+    }
 
     @Pointcut("execution(* me.qiancheng.qianworks.meicai.service.MailService.send(..))")
-    public void mailServicePointcut(){ }
+    public void mailServicePointcut() {
+    }
 
-//    @Before(value="mailServicePointcut() && args(to,subject,content)")
-    public void before(JoinPoint jp,String to,String subject,String content){
-        LOG.debug("sending mail..."+to);
+    @Before(value = "mailServicePointcut() && args(to,subject,content)")
+    public void before(JoinPoint jp, String to, String subject, String content) {
+        LOG.debug("sending mail..." + to);
     }
 
 
-//    @Around(value="sendMailPointcut(email)")
-    public void beforeSendMail(ProceedingJoinPoint point, Email email) throws Throwable {
-        email.setFromAddress(nickname, from);
-        email.setTextHTML("-----------\n千橙工坊");
-        LOG.debug("----------------");
-        point.proceed();
-        LOG.warn(":::::::beforeSendMail ");
+    @Before(value = "sendMailPointcut(email)")
+    public void beforeSendMail(Email email) throws Throwable {
+        email.setFromAddress("千橙工坊", from);
+        email.setTextHTML(email.getTextHTML() + "<br>-----------</br>千橙工坊");
     }
 
-//    @After("execution(* me.qiancheng.qianworks.meicai.service.MailService.send(..))")
-    @After("within(me.qiancheng.qianworks.meicai.service..*)")
-    public void after(JoinPoint jp){
-        LOG.warn("after1111111111 mail sending. ");
-    }
-
-//    @After("execution(* me.qiancheng.qianworks.meicai.service.MailService.send(..))")
-    @After("execution(* me.qiancheng.qianworks.meicai.service.*Service.sendMail(..))")
-    public void after2(JoinPoint jp){
+    //    @After("execution(* me.qiancheng.qianworks.meicai.service.*Service.sendMail(..))")
+    @After("execution(* me.qiancheng.qianworks.meicai.service.MailService.send(..))")
+    public void after2(JoinPoint jp) {
         LOG.warn("after mail sending. ");
     }
 
