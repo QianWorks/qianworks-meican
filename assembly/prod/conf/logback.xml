@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!--定义日志文件的存储地址 勿在 LogBack的配置中使用相对路径 -->
+	<property name="LOG_DIR" value="/home/product/logs" />
+	<!--定义监控日志路径 -->
+    <property name="MONITORLOG_DIR" value="/home/product/logs/fsof_monitor/" />
+	<!--项目名称 -->
+	<property name="PROJECT_NAME" value="qianworks_meican" />
+	<!--STDOUT 只用于开发环境  -->
+	<appender name="STDOUT_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- %.-1level 只显示信息级别的首字母,%-5level 左对齐显示信息级别全称 -->
+			<!-- 如需自定义关键字，用 %X{键名} 表示,程序中用MDC.put("键名","键值")设置，可动态设置 [%logger:%line] -->
+			<Pattern>[%date{yyyy-MM-dd HH:mm:ss}][%p][%X{MSG}][%C][%M][%L][%m]%n
+			</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	
+	<appender name="ROOT_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 分包间隔是根据fileNamePattern中指定的事件最小单位，比如例子中的%d{yyyyMMddHH}的最小事件单位为小时，则每小时生成一个文件 -->
+			<!-- 生产环境配置，绝对路径 -->
+			<FileNamePattern>${LOG_DIR}/${PROJECT_NAME}_logs/${PROJECT_NAME}_%d{yyyyMMddHH}.log
+			<!-- 开发环境配置，相对路径 -->
+<!-- 			<FileNamePattern>logs/${PROJECT_NAME}_%d{yyyy-MM-dd}.log -->
+			</FileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>[%date{yyyy-MM-dd HH:mm:ss}][%p][%X{MSG}][%C][%M][%L][%m]%n
+			</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	
+	<!-- ACCESS -->
+	<!-- 将日志打印到不同的文件 使用name获取logger对象  LoggerFactory.getLogger("ACCESS_LOG");-->
+	<!-- appender和logger的name必须用大写，防止与java包名重复-->
+	<appender name="ACCESS_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 开发环境配置相对路径 -->
+<!-- 			<FileNamePattern>logs/${PROJECT_NAME}_ACCESS_%d{yyyyMMdd}.log -->
+			<!-- 生产环境配置绝对路径 -->
+			<FileNamePattern>${LOG_DIR}/${PROJECT_NAME}_logs/${PROJECT_NAME}_ACCESS_%d{yyyyMMddHH}.log
+			</FileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>[%date{yyyy-MM-dd HH:mm:ss}][%p][%X{MSG}][%C][%M][%L][%m]%n
+			</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	
+	<logger name="ACCESS_LOG" level="INFO" additivity="false">
+		<appender-ref ref="ACCESS_APPENDER" />
+	</logger>
+	<!-- ACCESS end -->
+	
+	<logger name="org.springframework" level="WARN" />
+	<logger name="java.sql.Connection" level="INFO" />
+	<logger name="java.sql.ResultSet" level="INFO" />
+	<logger name="org.apache.zookeeper.ClientCnxn" level="INFO" />
+	<logger name="org.simplejavamail" level="DEBUG" />
+
+	<!-- dubbo monitor -->
+	<appender name="MONITOR_APPENDER"
+	    class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${MONITORLOG_DIR}/provider_service.log</File>
+		<prudent>true</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		    <fileNamePattern>${MONITORLOG_DIR}/provider_service.%d{yyyy-MM-dd}.log</fileNamePattern>
+		    <maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+		    <Pattern>%m%n
+		    </Pattern>
+		    <charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	
+	<logger name="MONITOR_LOG" level="INFO" additivity="false">
+	    <appender-ref ref="MONITOR_APPENDER" />
+	</logger>
+	<!-- dubbo monitor end -->
+	
+	<!-- 开发环境 level=DEBUG 生产为ERROR -->
+	<root level="DEBUG">
+		<!--STDOUT 只用于开发环境  -->
+		<appender-ref ref="STDOUT_APPENDER" />
+		<appender-ref ref="ROOT_APPENDER" />
+	</root>
+</configuration>  

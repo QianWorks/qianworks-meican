@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="TestSuit">
+
+  <test name="meicai">
+	  <packages>
+		  <package name="me.qiancheng.qianworks.meicai" />
+	  </packages>
+  </test>
+
+</suite>
