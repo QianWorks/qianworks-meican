@@ -1,20 +1,10 @@
 package me.qiancheng.qianworks.meicai.schedule;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.google.common.collect.Maps;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Maps;
-import me.qiancheng.qianworks.meicai.constant.MeicanAPIConstant;
-import me.qiancheng.qianworks.meicai.model.Args;
-import me.qiancheng.qianworks.meicai.model.Status;
-import me.qiancheng.qianworks.meicai.model.Token;
-import me.qiancheng.qianworks.meicai.service.MailService;
-import me.qiancheng.qianworks.meicai.service.Oauth2Service;
-import me.qiancheng.qianworks.meicai.service.OrderService;
-import me.qiancheng.qianworks.meicai.util.RetrofitServiceFactory;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -23,6 +13,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import me.qiancheng.qianworks.meicai.constant.MeicanAPIConstant;
+import me.qiancheng.qianworks.meicai.model.Args;
+import me.qiancheng.qianworks.meicai.model.Status;
+import me.qiancheng.qianworks.meicai.model.Token;
+import me.qiancheng.qianworks.meicai.service.MailService;
+import me.qiancheng.qianworks.meicai.service.Oauth2Service;
+import me.qiancheng.qianworks.meicai.service.OrderService;
+import me.qiancheng.qianworks.meicai.util.RetrofitServiceFactory;
+import me.qiancheng.qianworks.meicai.util.StringHelper;
 import retrofit2.Call;
 
 @Component
@@ -99,7 +103,7 @@ public class ScheduledTasks {
             }
         }else{
 //            mailService.send("i@qiancheng.me","faiure",StringEscapeUtils.unescapeJava(response.errorBody().string()));
-            mailWorker.faiure(StringEscapeUtils.unescapeJava(response.errorBody().string()));
+            mailWorker.faiure(StringHelper.removeBlank(StringEscapeUtils.unescapeJava(response.errorBody().string())));
         }
     }
 
