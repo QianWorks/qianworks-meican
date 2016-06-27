@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import me.qiancheng.qianworks.meicai.constant.MeicanAPIConstant;
 import me.qiancheng.qianworks.meicai.model.Args;
+import me.qiancheng.qianworks.meicai.model.Return;
 import me.qiancheng.qianworks.meicai.model.Status;
 import me.qiancheng.qianworks.meicai.model.Token;
 import me.qiancheng.qianworks.meicai.service.MailService;
@@ -98,7 +99,7 @@ public class ScheduledTasks {
             Status status = (Status) response.body();
             LOG.debug(response.body().toString());
             if(StringUtils.isEmpty(status.getError())){
-                mailWorker.success("成功！" + status.toString());
+                mailWorker.success("成功！" + new Return(response.code(), response.message()));
             }else{
                 mailService.send("i@qiancheng.me","faiure",status.toString());
             }
