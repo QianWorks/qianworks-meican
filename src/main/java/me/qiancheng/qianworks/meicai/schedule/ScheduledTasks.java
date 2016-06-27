@@ -45,7 +45,7 @@ public class ScheduledTasks {
     private OrderService orderService = new RetrofitServiceFactory<OrderService>().getService(OrderService.class);
 
 
-    @Scheduled(fixedRate = 1000*3600, initialDelay = 10 * 1000)
+    @Scheduled(fixedRate = 1000 * 3600 * 3, initialDelay = 10 * 1000)
     public void checkOrder() throws IOException {
         LOG.info("reportCurrentTime1 - " + counter.incrementAndGet());
         Map<String,String> clientMap = Maps.newHashMap();
@@ -96,8 +96,9 @@ public class ScheduledTasks {
         retrofit2.Response response = call.execute();
         if(response.isSuccessful()){
             Status status = (Status) response.body();
+            LOG.debug(response.body().toString());
             if(StringUtils.isEmpty(status.getError())){
-                mailWorker.success("成功！");
+                mailWorker.success("成功！" + status.toString());
             }else{
                 mailService.send("i@qiancheng.me","faiure",status.toString());
             }
