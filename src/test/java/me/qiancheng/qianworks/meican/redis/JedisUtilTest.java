@@ -16,7 +16,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class JedisUtilTest {
 
-    public static final String HOST = "192.168.40.148";
+    public static final String HOST = "127.0.0.1";
 
     Jedis jedis;
 
