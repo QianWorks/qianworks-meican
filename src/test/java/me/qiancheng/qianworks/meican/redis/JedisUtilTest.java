@@ -39,17 +39,17 @@ public class JedisUtilTest {
     @Test
     public void testBasicString(){
         //-----添加数据----------
-        jedis.set("name","minxr");//向key-->name中放入了value-->minxr
-        Assert.assertEquals(jedis.get("name"),"minxr");//执行结果：minxr
+        jedis.set("name","qian");//向key-->name中放入了value-->qian
+        Assert.assertEquals(jedis.get("name"),"qian");//执行结果：qian
 
         //-----修改数据-----------
         //1、在原来基础上修改
-        jedis.append("name","jarorwar");   //很直观，类似map 将jarorwar append到已经有的value之后
-        Assert.assertEquals(jedis.get("name"),"minxrjarorwar");//执行结果:minxrjarorwar
+        jedis.append("name","qianworks");   //很直观，类似map 将jarorwar append到已经有的value之后
+        Assert.assertEquals(jedis.get("name"),"qianqianworks");//执行结果:qianqianworks
 
         //2、直接覆盖原来的数据
-        jedis.set("name","闵晓荣");
-        Assert.assertEquals(jedis.get("name"),"闵晓荣");//执行结果：闵晓荣
+        jedis.set("name","千橙");
+        Assert.assertEquals(jedis.get("name"),"千橙");//执行结果：千橙
 
         //删除key对应的记录
         jedis.del("name");
@@ -57,12 +57,12 @@ public class JedisUtilTest {
 
         /**
          * mset相当于
-         * jedis.set("name","minxr");
-         * jedis.set("jarorwar","闵晓荣");
+         * jedis.set("name","qian");
+         * jedis.set("qianworks","千橙");
          */
-        jedis.mset("name","minxr","jarorwar","闵晓荣");
-        Assert.assertEquals(jedis.mget("name","jarorwar").get(0).toString(),"minxr");
-        Assert.assertEquals(jedis.mget("name","jarorwar").get(1).toString(),"闵晓荣");
+        jedis.mset("name","qian","qianworks","千橙");
+        Assert.assertEquals(jedis.mget("name","qianworks").get(0).toString(),"qian");
+        Assert.assertEquals(jedis.mget("name","qianworks").get(1).toString(),"千橙");
 
     }
 
@@ -72,13 +72,13 @@ public class JedisUtilTest {
     @Test
     public void testMap(){
         Map<String,String> user=new HashMap<String,String>();
-        user.put("name","minxr");
+        user.put("name","qian");
         user.put("pwd","password");
         jedis.hmset("user",user);
-        //取出user中的name，执行结果:[minxr]-->注意结果是一个泛型的List
+        //取出user中的name，执行结果:[qian]-->注意结果是一个泛型的List
         //第一个参数是存入redis中map对象的key，后面跟的是放入map中的对象的key，后面的key可以跟多个，是可变参数
         List<String> rsmap = jedis.hmget("user", "name");
-        Assert.assertEquals(rsmap.get(0).toString(),"minxr");
+        Assert.assertEquals(rsmap.get(0).toString(),"qian");
 
         //删除map中的某个键值
         jedis.hdel("user","pwd");
@@ -86,7 +86,7 @@ public class JedisUtilTest {
         Assert.assertEquals(jedis.hlen("user").intValue(),1); //返回key为user的键中存放的值的个数1
         Assert.assertTrue(jedis.exists("user"));//是否存在key为user的记录 返回true
         Assert.assertFalse(jedis.hkeys("user").contains("pwd"));//返回map对象中的所有key  [pwd, name]
-        Assert.assertTrue(jedis.hvals("user").contains("minxr"));//返回map对象中的所有value  [minxr, password]
+        Assert.assertTrue(jedis.hvals("user").contains("qian"));//返回map对象中的所有value  [qian, password]
 
         Iterator<String> iter=jedis.hkeys("user").iterator();
         while (iter.hasNext()){
@@ -120,14 +120,14 @@ public class JedisUtilTest {
     @Test
     public void testSet(){
         //添加
-        jedis.sadd("sname","minxr");
-        jedis.sadd("sname","jarorwar");
-        jedis.sadd("sname","闵晓荣");
+        jedis.sadd("sname","qian");
+        jedis.sadd("sname","qianworks");
+        jedis.sadd("sname","千橙");
         jedis.sadd("sanme","noname");
         //移除noname
         jedis.srem("sname","noname");
         System.out.println(jedis.smembers("sname"));//获取所有加入的value
-        System.out.println(jedis.sismember("sname", "minxr"));//判断 minxr 是否是sname集合的元素
+        System.out.println(jedis.sismember("sname", "qian"));//判断 qian 是否是sname集合的元素
         System.out.println(jedis.srandmember("sname"));
         System.out.println(jedis.scard("sname"));//返回集合的元素个数
     }
@@ -135,7 +135,7 @@ public class JedisUtilTest {
     @Test
     public void test() throws InterruptedException {
         //keys中传入的可以用通配符
-        System.out.println(jedis.keys("*")); //返回当前库中所有的key  [sose, sanme, name, jarorwar, foo, sname, java framework, user, braand]
+        System.out.println(jedis.keys("*")); //返回当前库中所有的key  [sose, sanme, name, qianworks, foo, sname, java framework, user, braand]
         System.out.println(jedis.keys("*name"));//返回的sname   [sname, name]
         System.out.println(jedis.del("sanmdde"));//删除key为sanmdde的对象  删除成功返回1 删除失败（或者不存在）返回 0
         System.out.println(jedis.ttl("sname"));//返回给定key的有效时间，如果是-1则表示永远有效
