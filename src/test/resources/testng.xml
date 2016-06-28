@@ -2,9 +2,16 @@
 
 <suite name="TestSuit">
 
-  <test name="meicai">
+  <test name="redis">
 	  <packages>
-		  <package name="me.qiancheng.qianworks.meicai" />
+		  <package name="me.qiancheng.qianworks.meicai.redis" />
+	  </packages>
+  </test>
+
+
+  <test name="schedule">
+	  <packages>
+		  <package name="me.qiancheng.qianworks.meicai.schedule" />
 	  </packages>
   </test>
 
