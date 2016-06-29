@@ -1,7 +1,6 @@
 package me.qiancheng.qianworks.meicai.schedule;
 
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
 
 //@Component
 public class AsyncWorker{
@@ -12,6 +11,7 @@ public class AsyncWorker{
         System.out.println("   " + threadName + " beginning work on " + name);
         try {
             Thread.sleep(1000 * 5); // simulates work
+
 
         }catch (InterruptedException e) {
             Thread.currentThread().interrupt();
