@@ -11,6 +11,7 @@ public interface MeicanAPIConstant {
     String CLIENT_ID = "HRVmPZebY51X4mmhaKfAR2vhuISn1nR";
     String CLIENT_SECRET = "qTgaAN6h6MsKi6c76kNHUZVbujihwpd";
     String URI_OAUTH = "/oauth/token";
+    String URI_OAUTH_REFRESH = "/oauth/refresh";
     String URI_ORDER_CREATE = "/orders/add";
     String URI_ORDER_CANCEL = "/orders/delete";
     String URI_ORDER_UPDATE = "/orders/update";
