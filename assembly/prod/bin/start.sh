@@ -90,7 +90,7 @@ function start_server()
     #start server
     cd $DEPLOY_DIR
     echo -e "Starting the $SERVER_NAME ...\c"
-    nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$OUT_PROJECT_CONFIG_DIR:$OUT_JARS_DIR:$LIB_JARS $MAIN_CLASS > $STDOUT_FILE 2>&1 &
+    nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$OUT_PROJECT_CONFIG_DIR:$OUT_JARS_DIR:$LIB_JARS $MAIN_CLASS &>/dev/null &
     cd $BIN_DIR
 }
 

@@ -1,6 +1,7 @@
 package me.qiancheng.qianworks.meicai.base;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -44,5 +45,26 @@ public class Context implements ApplicationContextAware {
      */
     public static void setApplicationContextValue(ApplicationContext applicationContext) {
         Context.applicationContext = applicationContext;
+    }
+
+
+    public static <T> T getBean(String name, Class<T> requiredType) throws BeansException {
+        return Context.applicationContext.getBean(name, requiredType);
+    }
+
+    public static boolean containsBean(String name) {
+        return Context.applicationContext.containsBean(name);
+    }
+
+    public static boolean isSingleton(String name) throws NoSuchBeanDefinitionException {
+        return Context.applicationContext.isSingleton(name);
+    }
+
+    public static <T> Class<T> getType(String name) throws NoSuchBeanDefinitionException {
+        return (Class<T>) Context.applicationContext.getType(name);
+    }
+
+    public static String[] getAliases(String name) throws NoSuchBeanDefinitionException {
+        return Context.applicationContext.getAliases(name);
     }
 }
